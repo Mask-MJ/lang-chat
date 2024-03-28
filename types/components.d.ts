@@ -7,15 +7,19 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    Avatar: typeof import('./../src/components/Avatar.vue')['default']
     HelloWorld: typeof import('./../src/components/HelloWorld.vue')['default']
     IconCommunity: typeof import('./../src/components/icons/IconCommunity.vue')['default']
     IconDocumentation: typeof import('./../src/components/icons/IconDocumentation.vue')['default']
     IconEcosystem: typeof import('./../src/components/icons/IconEcosystem.vue')['default']
     IconSupport: typeof import('./../src/components/icons/IconSupport.vue')['default']
     IconTooling: typeof import('./../src/components/icons/IconTooling.vue')['default']
+    Message: typeof import('./../src/components/Message/index.vue')['default']
+    NAvatar: typeof import('naive-ui')['NAvatar']
     NButton: typeof import('naive-ui')['NButton']
     NCard: typeof import('naive-ui')['NCard']
     NIcon: typeof import('naive-ui')['NIcon']
+    NInput: typeof import('naive-ui')['NInput']
     NLayout: typeof import('naive-ui')['NLayout']
     NLayoutContent: typeof import('naive-ui')['NLayoutContent']
     NLayoutFooter: typeof import('naive-ui')['NLayoutFooter']
@@ -33,6 +37,8 @@ declare module 'vue' {
     NThing: typeof import('naive-ui')['NThing']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SvgIcon: typeof import('./../src/components/SvgIcon.vue')['default']
+    Text: typeof import('./../src/components/Message/Text.vue')['default']
     TheWelcome: typeof import('./../src/components/TheWelcome.vue')['default']
     WelcomeItem: typeof import('./../src/components/WelcomeItem.vue')['default']
   }

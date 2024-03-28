@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import SiderView from './views/SiderView.vue'
 import ChatHistory from './views/ChatHistory.vue'
+import ChatView from './views/ChatView.vue'
 </script>
 
 <template>
@@ -14,7 +15,9 @@ import ChatHistory from './views/ChatHistory.vue'
           <div class="p-4 b-b-1 border-gray-200">头部</div>
           <div class="flex flex-1">
             <ChatHistory />
-            <div class="bg-gray-100 flex-1">222</div>
+            <div class="bg-gray-100 flex-1">
+              <ChatView />
+            </div>
           </div>
         </div>
       </n-layout-content>
