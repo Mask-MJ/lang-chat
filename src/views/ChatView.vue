@@ -279,7 +279,7 @@ async function onConversation() {
 
 function handleStop() {
   if (loading.value) {
-    // controller.abort()
+    controller.abort()
     loading.value = false
   }
 }

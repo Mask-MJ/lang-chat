@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { uniqueId } from 'lodash-es'
 
-const historyList = ref<{ id: string; name: string }[]>([])
+const historyList = ref<{ id: string; name: string; time: string }[]>([])
 const activeChat = ref<string>()
 
 const newChat = () => {
   const id = uniqueId('chat_')
-  historyList.value.push({ id, name: `${id}最新的打印机` })
+  historyList.value.push({ id, name: `新建聊天`, time: new Date().toLocaleString() })
   activeChat.value = id
 }
 const deleteChat = (index: string) => {
@@ -33,17 +33,18 @@ const deleteChat = (index: string) => {
       <n-list hoverable clickable class="p-2">
         <n-list-item
           class="mb-2 border-2 border-gray-300"
-          :class="activeChat === item.id && '!border-blue-500'"
+          :class="activeChat === item.id && '!border-#18a058'"
           v-for="item in historyList"
           :key="item.id"
           @click="activeChat = item.id"
         >
-          <div class="flex-center">
+          <div class="flex-center mb-1">
             <p class="w-30 text-truncate mr-2">{{ item.name }}</p>
             <div class="flex-center p-1 hover:bg-gray-300 rounded" @click="deleteChat(item.id)">
-              <i class="i-carbon:delete"></i>
+              <i class="i-ant-design:delete-outlined"></i>
             </div>
           </div>
+          <p class="text-xs">{{ item.time }}</p>
         </n-list-item>
       </n-list>
     </n-scrollbar>
@@ -54,7 +55,7 @@ const deleteChat = (index: string) => {
 </template>
 
 <style scoped>
-.chat-history {
+/* .chat-history {
   height: calc(100vh - 60px);
-}
+} */
 </style>

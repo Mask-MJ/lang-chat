@@ -13,7 +13,7 @@ import ChatView from './views/ChatView.vue'
       <n-layout>
         <n-layout-content class="h-full">
           <div class="flex flex-col h-full">
-            <div class="p-4 b-b-1 border-gray-200">头部</div>
+            <!-- <div class="p-4 b-b-1 border-gray-200">头部</div> -->
             <div class="flex flex-1">
               <ChatHistory />
               <div class="bg-gray-100 flex-1">
