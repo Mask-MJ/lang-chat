@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 // import {updateChatSome }
 import { useChat } from './useChat'
 import { useScroll } from './useScroll'
+import { useDialog } from 'naive-ui'
 
 let controller = new AbortController()
 
@@ -49,6 +50,8 @@ function handleDelete(index: number) {
     }
   })
 }
+
+async function fetchChatAPIProcess() {}
 
 async function onRegenerate(index: number) {
   if (loading.value) return

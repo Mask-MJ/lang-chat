@@ -15,6 +15,7 @@
   "dependencies": {
     "@traptitech/markdown-it-katex": "^3.6.0",
     "@vueuse/core": "^10.9.0",
+    "axios": "^1.6.8",
     "highlight.js": "^11.9.0",
     "lodash-es": "^4.17.21",
     "markdown-it": "^14.1.0",
