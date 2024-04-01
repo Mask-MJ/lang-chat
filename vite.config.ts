@@ -26,6 +26,17 @@ export default defineConfig({
     }),
     Components({ dts: 'types/components.d.ts', resolvers: [NaiveUiResolver()] })
   ],
+  server: {
+    port: 3100,
+    host: true,
+    proxy: {
+      '/api': {
+        target: 'http://1497e562.r18.cpolar.top/chat',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
+  },
   esbuild: { pure: ['console.log', 'console.info', 'console.error'] },
   resolve: {
     alias: {

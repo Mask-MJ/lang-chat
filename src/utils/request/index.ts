@@ -1,6 +1,5 @@
 import type { AxiosProgressEvent, AxiosResponse, GenericAbortSignal } from 'axios'
 import request from './axios'
-import { useAuthStore } from '@/store'
 
 export interface HttpOption {
   url: string
@@ -19,17 +18,20 @@ export interface Response<T = any> {
   status: string
 }
 
-function http<T = any>(
-  { url, data, method, headers, onDownloadProgress, signal, beforeRequest, afterRequest }: HttpOption,
-) {
+function http<T = any>({
+  url,
+  data,
+  method,
+  headers,
+  onDownloadProgress,
+  signal,
+  beforeRequest,
+  afterRequest
+}: HttpOption) {
   const successHandler = (res: AxiosResponse<Response<T>>) => {
-    const authStore = useAuthStore()
-
-    if (res.data.status === 'Success' || typeof res.data === 'string')
-      return res.data
+    if (res.data.status === 'Success' || typeof res.data === 'string') return res.data
 
     if (res.data.status === 'Unauthorized') {
-      authStore.removeToken()
       window.location.reload()
     }
 
@@ -49,12 +51,20 @@ function http<T = any>(
 
   return method === 'GET'
     ? request.get(url, { params, signal, onDownloadProgress }).then(successHandler, failHandler)
-    : request.post(url, params, { headers, signal, onDownloadProgress }).then(successHandler, failHandler)
+    : request
+        .post(url, params, { headers, signal, onDownloadProgress })
+        .then(successHandler, failHandler)
 }
 
-export function get<T = any>(
-  { url, data, method = 'GET', onDownloadProgress, signal, beforeRequest, afterRequest }: HttpOption,
-): Promise<Response<T>> {
+export function get<T = any>({
+  url,
+  data,
+  method = 'GET',
+  onDownloadProgress,
+  signal,
+  beforeRequest,
+  afterRequest
+}: HttpOption): Promise<Response<T>> {
   return http<T>({
     url,
     method,
@@ -62,13 +72,20 @@ export function get<T = any>(
     onDownloadProgress,
     signal,
     beforeRequest,
-    afterRequest,
+    afterRequest
   })
 }
 
-export function post<T = any>(
-  { url, data, method = 'POST', headers, onDownloadProgress, signal, beforeRequest, afterRequest }: HttpOption,
-): Promise<Response<T>> {
+export function post<T = any>({
+  url,
+  data,
+  method = 'POST',
+  headers,
+  onDownloadProgress,
+  signal,
+  beforeRequest,
+  afterRequest
+}: HttpOption): Promise<Response<T>> {
   return http<T>({
     url,
     method,
@@ -77,7 +94,7 @@ export function post<T = any>(
     onDownloadProgress,
     signal,
     beforeRequest,
-    afterRequest,
+    afterRequest
   })
 }
 

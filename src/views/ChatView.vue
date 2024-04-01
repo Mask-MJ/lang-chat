@@ -5,6 +5,7 @@ import { useRoute } from 'vue-router'
 import { useChat } from './useChat'
 import { useScroll } from './useScroll'
 import { useDialog } from 'naive-ui'
+import { fetchChatAPIProcess } from '@/api'
 
 let controller = new AbortController()
 
@@ -50,8 +51,6 @@ function handleDelete(index: number) {
     }
   })
 }
-
-async function fetchChatAPIProcess() {}
 
 async function onRegenerate(index: number) {
   if (loading.value) return
@@ -101,14 +100,15 @@ async function onRegenerate(index: number) {
               error: false,
               loading: true,
               conversationOptions: {
-                conversationId: data.conversationId,
-                parentMessageId: data.id
+                conversation_id: data.conversation_id,
+                message_id: data.message_id,
+                query: data.query
               },
               requestOptions: { prompt: message, options: { ...options } }
             })
 
             if (data.detail.choices[0].finish_reason === 'length') {
-              options.parentMessageId = data.id
+              options.message_id = data.message_id
               lastText = data.text
               message = ''
               return fetchChatAPIOnce()
@@ -178,7 +178,9 @@ async function onConversation() {
   loading.value = true
   prompt.value = ''
 
-  let options: Chat.ConversationRequest = {}
+  let options: Chat.ConversationRequest = {
+    query: message
+  }
   const lastContext = conversationList.value[conversationList.value.length - 1]?.conversationOptions
 
   if (lastContext) options = { ...lastContext }
@@ -204,10 +206,9 @@ async function onConversation() {
         onDownloadProgress: ({ event }) => {
           const xhr = event.target
           const { responseText } = xhr
-          // Always process the final line
-          const lastIndex = responseText.lastIndexOf('\n', responseText.length - 2)
-          let chunk = responseText
-          if (lastIndex !== -1) chunk = responseText.substring(lastIndex)
+
+          let chunk = responseText.substring(6, responseText.length)
+
           try {
             const data = JSON.parse(chunk)
             updateChat(+uuid, dataSources.value.length - 1, {
@@ -217,14 +218,15 @@ async function onConversation() {
               error: false,
               loading: true,
               conversationOptions: {
-                conversationId: data.conversationId,
-                parentMessageId: data.id
+                conversation_id: data.conversation_id,
+                message_id: data.message_id,
+                query: data.query
               },
               requestOptions: { prompt: message, options: { ...options } }
             })
 
             if (data.detail.choices[0].finish_reason === 'length') {
-              options.parentMessageId = data.id
+              options.message_id = data.message_id
               lastText = data.text
               message = ''
               return fetchChatAPIOnce()
